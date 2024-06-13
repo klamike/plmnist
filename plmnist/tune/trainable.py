@@ -81,3 +81,7 @@ class MNISTTrainable(Trainable):
 
         # make sure to set `resume_ckpt_path` so the next step will load the weights from the given checkpoint
         self.resume_ckpt_path = checkpoint["model_path"]
+
+    # add a resource request for GPU training. this is low-memory, so 8 can easily fit on one GPU.
+    def default_resource_request(self):
+        return {"cpu": 1, "gpu": 0.125}

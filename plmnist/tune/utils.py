@@ -3,6 +3,11 @@ def hide_logs():
 
     os.environ["TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S"] = "0"
 
+    # do not use SLURMEnvironment
+    from pytorch_lightning.plugins.environments import SLURMEnvironment
+
+    SLURMEnvironment.detect = lambda: False
+
     # needs to be run on each worker
     warnings.filterwarnings("ignore", "Checkpoint directory .* exists and is not empty")
     for module in logging.Logger.manager.loggerDict:
